@@ -1,90 +1,74 @@
 body {
+    position:absolute;
+    height:100%;
+    width:100%;
     margin:0;
+    
+    background-color:rgb(32,34,37);
 }
 
-/* Divs and Grid */
-
-div#gridbox {
-    display: grid;
-    position:absolute;
-    grid: 3fr 1fr / 3fr 1fr;
-    grid-template-areas: "main memory" "time time";
+.container {
+    display:flex;
+    justify-content:space-around;
     height:100%;
     width:100%;
 }
 
-div#main {
-    grid-area:"main";
-    background:black;
-    border-top:5px ridge white;
-    border-left:5px ridge white;
-
+.center {
+    box-sizing:border-box;
     display:grid;
-    grid: 1fr 1fr / 2fr 1fr 2fr;
-    justify-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 3fr 1fr;
+
     align-items:center;
+    height:100%;
+    width:80%;
+    padding:2rem;
+    z-index:999;
 }
 
-div#time {
-    grid-area:"time";
-    grid-row: 2 / -1;
-    grid-column: 1 / span 2;
+.center > div {
+    height:100%;
+    width:100%;
+}
 
-    background: rgb(13, 13, 13);
-    border:5px ridge white;
+.top {
+    display:grid;
+    grid-template-columns: 1fr 100px 40px;
+    grid-template-rows: auto;
+}
+.logo {
+    width:max-content;
+    justify-self:start;
+
+    font-family:monospace;
+    letter-spacing:2px;
+    color:#e2b714;
+    font-size:40px;
+    font-weight:bold;
+}
+.time {
+    height:max-content;
+    box-sizing:border-box;
+    margin:15px 0;
     
+    font-family:monospace;
+    letter-spacing:2px;
+    color:#e2b714;
+    font-size:10px;
+    font-weight:bold;
 }
+.pulse {
+    width:40px;
+    height:40px;
 
-div#memory {
-    grid-area:"memory";
-    background: rgb(13, 13, 13);
-    border:5px ridge white;
-    border-bottom:none;
+    background-image:radial-gradient(circle at center, transparent, transparent 50%, #e2b714 55%, #e2b714 60%,transparent 60%);
+    transform:scale(0);
+    animation: pulse 1s infinite;
 }
-
-/* Main Div Contents */
-
-p#leftNumber {
-    background: whitesmoke;
-    border:2px solid grey;
-    display:inline-block;
-    justify-self:right;
-    line-height: 100%;
-    width: 8rem;
-    height: 5rem;
-    text-align:center;
-    font-size: 5em;
-}
-p#operand {
-    background: whitesmoke;
-    border:2px solid grey;
-    display:inline-block;
-    width: 6rem;
-    height: 4rem;
-    line-height: 80%;
-    text-align:center;
-    font-size: 5em;
-}
-p#rightNumber {
-    background: whitesmoke;
-    border:2px solid grey;
-    display:inline-block;
-    justify-self:left;
-    line-height: 100%;
-    width: 8rem;
-    height: 5rem;
-    text-align:center;
-    font-size: 5em;
-}
-input#answer {
-    background:whitesmoke;
-    border:2px solid grey;
-    grid-row: 2 / 3;
-    grid-column: 1 / -1;
-    margin-bottom: 20%;
-
-    text-align: center;
-    width:8rem; 
-    height:5rem;
-    font-size:5em;
+@keyframes pulse {
+    to {
+        transform:scale(1);
+        opacity:0
+    }
 }
