@@ -36,3 +36,20 @@ qGen()
 
 // Session Score
 let scoreSession = 0
+
+
+// Settings Button
+const sButton = document.getElementById("settingsButton")
+const sWrapper = document.getElementById("settingsWrapper")
+
+const sClose = document.getElementById("settingsClose")
+
+
+sButton.addEventListener("click", e => {
+    sWrapper.style.setProperty("z-index", "1000")
+    sWrapper.style.setProperty("opacity", "1")
+    } );
+sClose.addEventListener("click", e => {
+    sWrapper.style.setProperty("z-index", "998")
+    sWrapper.style.setProperty("opacity", "0")
+    } );
