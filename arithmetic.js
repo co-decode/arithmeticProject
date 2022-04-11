@@ -1,12 +1,31 @@
 'use strict'
 
 // Session Timer
-const startSess = new Date().getTime()
+let inSession = false;
+let sessSecs = 0;
+let timerInterval 
+document.getElementById("answer").addEventListener("keypress", e => {
+    if (inSession===false) {
+        inSession = true;
+        timerInterval = setInterval(timer, 989)
+        document.getElementById("pulse").style.setProperty('display','block')
+} } ); 
+
 const timer = () => {
-    let now = new Date().getTime()
-    document.getElementById('time').innerText = `Time: ${parseInt((now - startSess)/1000)}`
+    // console.log(performance.now())
+    document.getElementById('time').innerText = `Time: ${++sessSecs}`;
 }
-setInterval(timer, 1000)
+
+function sessReset () {
+    clearInterval(timerInterval)
+    inSession = false;
+    sessSecs = 0;
+    sessScore = 0;
+    
+    document.getElementById("pulse").style.setProperty('display','none')    
+    document.getElementById('score').innerText = `Correct: ${sessScore}`;
+    document.getElementById('time').innerText = `Time: ${sessSecs}`;
+}
 
 // Question Generator
 let leftNumber; 
@@ -21,8 +40,9 @@ let rightMax = document.querySelector("#sMRbot > input").value;
 
 const qGen = () => {
     //Number generation
-    leftNumber = parseInt(Math.random()*leftMax + Number(leftMin));
-    rightNumber = parseInt(Math.random()*rightMax + Number(rightMin));
+    // console.log(leftMin,leftMax)
+    leftNumber = parseInt(Math.random()*(1+Math.abs(leftMax-leftMin)) + Number(leftMin));
+    rightNumber = parseInt(Math.random()*(1+Math.abs(rightMax-rightMin)) + Number(rightMin));
     document.getElementById('leftNo').innerText = `${leftNumber}`;
     document.getElementById('rightNo').innerText = `${rightNumber}`;
     
@@ -30,34 +50,47 @@ const qGen = () => {
     let opSpec = document.querySelector("#sMMinput > input").value;
     let opArray = ['\\+', '-', '\\*', '/'];
     let opSelected = [];
-
+    
     for(let index = 0; index < opArray.length; index++) {
         if (opSpec.match(RegExp(opArray[index],'g'))){
             opSelected.push(opSpec.match(RegExp(opArray[index],'g'))['0'])
         }
-        else {opSelected.push('+')}
     }
-
+    
     //Operand generation
     opChosen = opSelected[parseInt(Math.random()*opSelected.length)]
-    // console.log(opChosen,opSelected,opSelected.length)
-    opChosen ? document.getElementById('operand').innerText = opChosen : document.getElementById('operand').innerText = '+';
+    console.log(opChosen,opSelected,opSelected.length)
+    opChosen ? document.getElementById('operand').innerText = opChosen : opChosen = '+';
+
+    //Division, Subtraction fix
     if (opChosen === '/') {
         leftNumber =  leftNumber * rightNumber;
         document.getElementById('leftNo').innerText = `${leftNumber}`
     }
-}
-
-// Build a decPrecision variable setting!! Done: false;
-// let decPrecision = ElementID.value
-
+    if (opChosen === '-') {
+        let temp;
+        console.log(rightNumber > leftNumber)
+        if (rightNumber > leftNumber) {
+                temp = rightNumber;
+                rightNumber = leftNumber;
+                leftNumber = temp;
+                document.getElementById('leftNo').innerText = `${leftNumber}`;
+                document.getElementById('rightNo').innerText = `${rightNumber}`;
+            }
+        }
+    }
+    
+    // Build a decPrecision variable setting!! Done: false;
+    // let decPrecision = ElementID.value
+    
 
 const qCheck = () => {
     let stringQ = `${leftNumber}` + opChosen + `${rightNumber}`;
+    console.log(stringQ)
 
     if (document.getElementById('answer').value === `${(eval(stringQ)).toFixed(0)}`) {
         document.getElementById('answer').value = ''
-        document.getElementById('score').innerText = `Correct: ${++scoreSession}`;
+        document.getElementById('score').innerText = `Correct: ${++sessScore}`;
         qGen();
     }
 }
@@ -68,7 +101,7 @@ document.getElementById('answer').addEventListener('keyup', e => {
 qGen()
 
 // Session Score
-let scoreSession = 0
+let sessScore = 0
 
 
 // Settings Button
@@ -82,6 +115,8 @@ sButton.addEventListener("click", e => {
     sWrapper.style.setProperty("display", "initial")
     sWrapper.style.setProperty("z-index", "1000")
     sWrapper.style.setProperty("opacity", "1")
+
+    sessReset();
 } );
 
 sClose.addEventListener("click", e => {
