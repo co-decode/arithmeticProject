@@ -7,6 +7,7 @@ html {
     --fsmed:40px;
     --fssml:20px;
     --fsmin:10px;
+    scrollbar-width: thin;
 }
 
 body {
@@ -16,6 +17,12 @@ body {
     margin:0;
     
     background-color:var(--bg);
+
+}
+
+input::selection {
+    color: var(--bg);
+    background: var(--sub)
 }
 
 .container {
@@ -134,6 +141,9 @@ body {
     font-size:var(--fsmed);
     font-family:var(--ff);  
 }
+#input > input:focus {
+    outline: none;
+}
 
 /* Bot: */
 .bottom {
@@ -152,6 +162,7 @@ body {
     cursor:pointer;
     box-sizing: border-box;
 
+    margin:-5px;
     background-color:transparent;
     border: transparent;
     text-align:center;
@@ -166,6 +177,9 @@ body {
     border: var(--sub) 5px solid;
     border-radius: 5px;
     background:var(--sub);
+}
+#settings > button:focus {
+    outline: var(--sub) 1px dashed;
 }
 
 #score {
@@ -182,6 +196,7 @@ body {
 #settingsWrapper {
     height: 100%;
     width:100%;
+    min-height:480px;
     position:absolute;
     box-sizing:border-box;
     top:0;
@@ -196,10 +211,7 @@ body {
     background-color:rgba(0,0,0,0.05);
     transition: opacity 0.3s ease 0s;
 }
-/* !! Remove hover effect when settings button is in place. */
-/* #settingsWrapper:hover {
-    opacity:1;
-} */
+
 
 #settingsMenu {
     margin:7px auto;
@@ -371,6 +383,9 @@ body {
     border: var(--bg) 5px solid;
     border-radius: 5px;
     background:var(--bg);
+}
+#sBotMid > button:focus {
+    outline: var(--bg) 1px dashed;
 }
 
 #sBotRight {
