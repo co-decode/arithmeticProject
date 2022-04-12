@@ -1,11 +1,5 @@
 'use strict'
 
-let listel = document.createElement('li')
-console.log(document.getElementById('tab'))
-
-document.getElementById('resultsList').appendChild(listel)
-
-
 // Session Timer
 document.getElementById('timeLimit').value ? document.getElementById('time').innerText = `Time: ${document.getElementById('timeLimit').value}` :
 document.getElementById('time').innerText = `Time: 0`
@@ -18,13 +12,24 @@ let inSession = 1;
 let sessSecs = 0;
 let timeLimitSeconds = document.getElementById('timeLimit').value
 let timerInterval
+let sessStartTime
 
 document.getElementById("answer").addEventListener("keypress", e => {
     if (inSession===1) {
         inSession = 0;
+        sessStartTime = performance.now()
+        document.getElementById('sessionResultST').innerText = `Score: ${sessScore} Time: 0`
+        document.getElementById('sessionResultAv').innerText = `Speed: 0 s/q`
         timerInterval = setInterval(timer, 989)
+        wipeMemory();
         document.getElementById("pulse").style.setProperty('display','block')
 } } ); 
+
+//Question Time
+
+
+
+//Timing Function
 
 const timer = () => {
     // console.log(performance.now())
@@ -32,17 +37,23 @@ const timer = () => {
         if (timeLimitSeconds > 1) {
         document.getElementById('time').innerText = `Time: ${--timeLimitSeconds}`;
     }
-    else {
+        else {
             document.getElementById('time').innerText = `Time: ${--timeLimitSeconds}`;
             clearInterval(timerInterval);
             document.getElementById("pulse").style.setProperty('display','none');
             inSession = -1;
+            timeResult = timeLimitSeconds;
+            updateSessResult();
         }
     }
     else {
     document.getElementById('time').innerText = `Time: ${++sessSecs}`; 
+        timeResult = sessSecs;
+        updateSessResult();
     }
 }
+
+//Session Reset
 
 function sessReset () {
     clearInterval(timerInterval)
@@ -116,8 +127,22 @@ const qGen = () => {
                 document.getElementById('rightNo').innerText = `${rightNumber}`;
         }
     }
+    let qEndTime = qBeginTime
+    qBeginTime = performance.now()
+    if (sessStartTime) {
+        qTime=qBeginTime-sessStartTime;
+        sessStartTime = false;
+    }
+    else {
+    qTime = qBeginTime-qEndTime 
+    }
+    console.log(qBeginTime,qEndTime, qTime)
+    console.log((qTime/1000).toFixed(1))
 }
-    
+//      v For Question timing ^
+let qBeginTime = 0;
+let qTime
+
     // Build a decPrecision variable setting!! Done: false;
     // let decPrecision = ElementID.value
     
@@ -142,7 +167,18 @@ const qCheck = () => {
                 document.getElementById('score').innerText = `Correct: ${++sessScore}`;
             }
         }
+        // function depositQNumbers () {
+        //     document.getElementById('memoryList').appendChild(document.createElement('li'))
+        //     return stringQ = `${leftNumber}` + opChosen + `${rightNumber}`
+        // }
+        let stringQnA = `${leftNumber} ${opChosen} ${rightNumber} = ${(eval(stringQ)).toFixed(0)}`
+
+        // function depositQTime() {
+        //     document.getElementById('memoryList').lastChild.innerText = `${stringQ} = ${eval(stringQ).toFixed(0)}\nTime: ${(qTime/1000).toFixed(1)}\n\n`
+        // }
+        // depositQNumbers()
         qGen();
+        depositQ(stringQnA);
     }
 }
 
@@ -196,4 +232,47 @@ function closeNGen() {
 }
 
 
-//
+//initialise result elements
+let timeResult = 0
+
+let sessionResultST = document.createElement('li')
+sessionResultST.setAttribute("id","sessionResultST")
+document.getElementById('resultsList').appendChild(sessionResultST)
+document.getElementById('sessionResultST').innerText = `Score: ${sessScore} Time: ${timeResult}`
+
+let sessionResultAv = document.createElement('li')
+sessionResultAv.setAttribute("id","sessionResultAv")
+document.getElementById('resultsList').appendChild(sessionResultAv)
+document.getElementById('sessionResultAv').innerText = `Speed: 0 s/q`
+
+function updateSessResult() {
+    document.getElementById('sessionResultST').innerText = `Score: ${sessScore} Time: ${timeResult}`;
+    if (sessScore > 0) {
+    document.getElementById('sessionResultAv').innerText = `Speed: ${(timeResult/sessScore).toFixed(1)} s/q`
+    }
+}
+
+//Generate memory elements
+function depositQ (qNa) {
+    document.getElementById('memoryList').appendChild(document.createElement('li'))
+    // let stringQ = `${leftNumber}` + opChosen + `${rightNumber}`
+    document.getElementById('memoryList').lastChild.innerText = `${qNa}\nTime: ${(qTime/1000).toFixed(1)}\n\n`
+}
+
+// function depositQNumbers () {
+//     document.getElementById('memoryList').appendChild(document.createElement('li'))
+//     let stringQ = `${leftNumber}` + opChosen + `${rightNumber}`
+// }
+
+// function depositQTime() {
+//     document.getElementById('memoryList').lastChild.innerText = `${stringQ} = ${eval(stringQ).toFixed(0)}\nTime: ${(qTime/1000).toFixed(1)}\n\n`
+// }
+
+//Memory Wipe
+
+function wipeMemory() {
+    let i = document.querySelectorAll('ol > li').length
+    while (i-- > 0) {
+        document.querySelector('#memoryList > li').remove()
+    }
+}
