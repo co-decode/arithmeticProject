@@ -1,8 +1,19 @@
 'use strict'
 
+let listel = document.createElement('li')
+console.log(document.getElementById('tab'))
+
+document.getElementById('resultsList').appendChild(listel)
+
+
 // Session Timer
 document.getElementById('timeLimit').value ? document.getElementById('time').innerText = `Time: ${document.getElementById('timeLimit').value}` :
 document.getElementById('time').innerText = `Time: 0`
+
+let scoreLimitValue = document.getElementById('scoreLimit')
+let scoreText = document.getElementById('score')
+scoreLimitValue.value ? scoreText.innerText = `Correct: 0 out of ${scoreLimitValue.value}` : scoreText.innerText = `Correct: 0`;
+
 let inSession = 1;
 let sessSecs = 0;
 let timeLimitSeconds = document.getElementById('timeLimit').value
@@ -17,7 +28,6 @@ document.getElementById("answer").addEventListener("keypress", e => {
 
 const timer = () => {
     // console.log(performance.now())
-        console.log(timeLimitSeconds)
     if (timeLimitSeconds) {
         if (timeLimitSeconds > 1) {
         document.getElementById('time').innerText = `Time: ${--timeLimitSeconds}`;
@@ -40,7 +50,7 @@ function sessReset () {
     sessSecs = 0;
     sessScore = 0;
     timeLimitSeconds = document.getElementById('timeLimit').value;
-    console.log(timeLimitSeconds)
+    // console.log(timeLimitSeconds)
     
     if (timeLimitSeconds) {
         document.getElementById('time').innerText = `Time: ${timeLimitSeconds}`;
@@ -98,7 +108,6 @@ const qGen = () => {
     }
     if (opChosen === '-') {
         let temp;
-        console.log(rightNumber > leftNumber)
         if (rightNumber > leftNumber) {
                 temp = rightNumber;
                 rightNumber = leftNumber;
@@ -120,7 +129,18 @@ const qCheck = () => {
     if (document.getElementById('answer').value === `${(eval(stringQ)).toFixed(0)}`) {
         document.getElementById('answer').value = ''
         if (inSession === 0) {
-        document.getElementById('score').innerText = `Correct: ${++sessScore}`;
+            if (scoreLimitValue.value) {
+                document.getElementById('score').innerText = `Correct: ${++sessScore} out of ${scoreLimitValue.value}`
+                console.log(inSession, typeof scoreLimitValue.value, typeof sessScore)
+                if (Number(scoreLimitValue.value) === sessScore) {
+                    clearInterval(timerInterval)
+                    inSession = -1;
+                    document.getElementById("pulse").style.setProperty('display','none')
+                }      
+            }
+            else {
+                document.getElementById('score').innerText = `Correct: ${++sessScore}`;
+            }
         }
         qGen();
     }
@@ -157,14 +177,12 @@ sClose.addEventListener("click", e => {
 document.addEventListener("keypress", e => {
     if (window.getComputedStyle(sWrapper).display === 'block') {
         if (e.shiftKey && e.code === 'Enter') {
-            // console.log("that tickles!")
                 // closeNGen()
             document.getElementById("settingsClose").focus();
             }
     }
     if (window.getComputedStyle(sWrapper).display === 'grid') {
         if (e.shiftKey && e.code === 'Enter') {
-            // console.log("that tickles!")
                 // closeNGen()
             document.getElementById("settingsButton").focus();
             }

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Arithmetic</title>
-    <meta charset="utf-8">
-    <link href="arithmetic.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <div class="center">
+    <head>
+        <title>Arithmetic</title>
+        <meta charset="utf-8">
+        <link href="arithmetic.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="center">
             <div class="top">
                 <div class="logo">Arhythmetic</div>
                 <div id="time" class="time">Time: 0</div>
@@ -48,17 +48,25 @@
             </div>
             <div id="sBotLeft">
                 <div id="sBLtitle">time limit</div>
-                <div id="sBLinput"><input id="timeLimit" type="text" placeholder="00"></div>
+                <div id="sBLinput"><input id="timeLimit" type="text" placeholder="none"></div>
             </div>
             <div id="sBotMid">
                 <button id="settingsClose">- close -</button>
             </div>
             <div id="sBotRight">
                 <div id="sBRtitle">score limit</div>
-                <div id="sBRinput"><input type="text" placeholder="00"></div>
+                <div id="sBRinput"><input id="scoreLimit" type="text" placeholder="none"></div>
             </div>
+        </div>
+    </div>
+    <div id="tab">
+        <a id="tabFocus" href="#"></a>
+        <div id="resultsBar">
+            Results
+            <ul id="resultsList">
+            </ul>
         </div>
     </div>
     <script src="arithmetic.js" type="application/javascript"></script>
 </body>
-</html>
+</html> 
