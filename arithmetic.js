@@ -35,14 +35,16 @@ const timer = () => {
     // console.log(performance.now())
     if (timeLimitSeconds) {
         if (timeLimitSeconds > 1) {
-        document.getElementById('time').innerText = `Time: ${--timeLimitSeconds}`;
-    }
+            document.getElementById('time').innerText = `Time: ${--timeLimitSeconds}`;
+            timeResult = ++sessSecs;
+            updateSessResult();
+        }
         else {
             document.getElementById('time').innerText = `Time: ${--timeLimitSeconds}`;
             clearInterval(timerInterval);
             document.getElementById("pulse").style.setProperty('display','none');
             inSession = -1;
-            timeResult = timeLimitSeconds;
+            timeResult = ++sessSecs;
             updateSessResult();
         }
     }
@@ -70,8 +72,13 @@ function sessReset () {
         document.getElementById('time').innerText = `Time: ${sessSecs}`;
     }
 
-    document.getElementById("pulse").style.setProperty('display','none')    
+    document.getElementById("pulse").style.setProperty('display','none');
+    if (scoreLimitValue.value) {
+        document.getElementById('score').innerText = `Correct: ${sessScore} out of ${scoreLimitValue.value}`;
+    }
+    else {
     document.getElementById('score').innerText = `Correct: ${sessScore}`;
+    }
 }
 
 // Question Generator
@@ -156,7 +163,8 @@ const qCheck = () => {
         if (inSession === 0) {
             if (scoreLimitValue.value) {
                 document.getElementById('score').innerText = `Correct: ${++sessScore} out of ${scoreLimitValue.value}`
-                console.log(inSession, typeof scoreLimitValue.value, typeof sessScore)
+                updateSessResult();
+                // console.log(inSession, typeof scoreLimitValue.value, typeof sessScore)
                 if (Number(scoreLimitValue.value) === sessScore) {
                     clearInterval(timerInterval)
                     inSession = -1;
@@ -165,6 +173,7 @@ const qCheck = () => {
             }
             else {
                 document.getElementById('score').innerText = `Correct: ${++sessScore}`;
+                updateSessResult()
             }
         }
         let stringQnA = `${leftNumber} ${opChosen} ${rightNumber} = ${(eval(stringQ)).toFixed(0)}`
@@ -209,7 +218,7 @@ document.addEventListener("keypress", e => {
             document.getElementById("settingsClose").focus();
             }
     }
-    if (window.getComputedStyle(sWrapper).display === 'grid') {
+    if (window.getComputedStyle(sWrapper).display === 'none') {
         if (e.shiftKey && e.code === 'Enter') {
                 // closeNGen()
             document.getElementById("settingsButton").focus();
@@ -246,9 +255,10 @@ function updateSessResult() {
 
 //Generate memory elements
 function depositQ (qNa) {
+    if (inSession === 0) {
     document.getElementById('memoryList').appendChild(document.createElement('li'))
-    // let stringQ = `${leftNumber}` + opChosen + `${rightNumber}`
     document.getElementById('memoryList').lastChild.innerText = `${qNa}\nTime: ${(qTime/1000).toFixed(1)}\n\n`
+    }
 }
 
 //Memory Wipe
@@ -304,3 +314,17 @@ function tabPull() {
         tabPulled = false;
     }
 }
+
+// Tab container
+function focusFirstElement() {
+    document.getElementById('answer').focus();
+}
+
+// Session Reset : Shift R within 'answer' -- Explain this in the options menu: false;
+document.getElementById('answer').addEventListener("keyup", e=> {
+    if (e.shiftKey && e.code === 'KeyR') {
+        sessReset();
+        document.getElementById('answer').value = '';   
+        document.getElementById('answer').focus();   
+    }
+})

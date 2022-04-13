@@ -470,7 +470,8 @@ input::selection {
     z-index: 1500;
 }
 #resultsBar:hover {
-    background-color:var(--sub)
+    background-color:var(--sub);
+    text-shadow: 1px 0px var(--bg);
 }
 
 #resultsList {
