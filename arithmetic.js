@@ -120,11 +120,11 @@ const qGen = () => {
     opChosen ? document.getElementById('operand').innerText = opChosen : opChosen = '+';
 
     //Division, Subtraction fix
-    if (opChosen === '/') {
+    if (opChosen === '/' && decPrecision === 0) {
         leftNumber =  leftNumber * rightNumber;
         document.getElementById('leftNo').innerText = `${leftNumber}`
     }
-    if (opChosen === '-') {
+    if (opChosen === '-' && subNegatives === 0) {
         let temp;
         if (rightNumber > leftNumber) {
                 temp = rightNumber;
@@ -150,15 +150,15 @@ const qGen = () => {
 let qBeginTime = 0;
 let qTime
 
-    // Build a decPrecision variable setting!! Done: false;
-    // let decPrecision = ElementID.value
-    
+    // For decPrecision;
+let decPrecision = 0;
+let subNegatives = 0    
 
 const qCheck = () => {
     let stringQ = `${leftNumber}` + opChosen + `${rightNumber}`;
     // console.log(stringQ)
 
-    if (document.getElementById('answer').value === `${(eval(stringQ)).toFixed(0)}`) {
+    if (document.getElementById('answer').value === `${(eval(stringQ)).toFixed(decPrecision)}`) {
         document.getElementById('answer').value = ''
         if (inSession === 0) {
             if (scoreLimitValue.value) {
@@ -222,7 +222,8 @@ document.addEventListener("keypress", e => {
             document.getElementById("settingsClose").focus();
             }
     }
-    if (window.getComputedStyle(sWrapper).display === 'none') {
+    if (window.getComputedStyle(sWrapper).display === 'none' && 
+        document.getElementById('optionsWrapper').style.getPropertyValue('display') === 'none') {
         if (e.shiftKey && e.code === 'KeyS') {
             e.preventDefault()
             document.getElementById("settingsButton").focus();
@@ -347,6 +348,11 @@ document.addEventListener("keydown", e=> {
             document.getElementById('answer').value = '';   
         }
     }
+    if (e.shiftKey && e.code==='KeyO'){
+        e.preventDefault();
+        menuToggle();
+        sessReset();
+    }
 })
 
 // Untabble 'answer' and 'settingButton' when Settings wrapper is open:
@@ -376,9 +382,13 @@ function menuToggle() {
     if (document.getElementById('optionsWrapper').style.getPropertyValue('display') === 'none') {
         document.getElementById('optionsWrapper').style.setProperty('display','grid')
         document.getElementById('settingsWrapper').style.setProperty('display','none')
+        document.getElementById('answer').tabIndex = -1;
+        document.getElementById('settingsButton').tabIndex = -1;
     }
     else if (document.getElementById('optionsWrapper').style.getPropertyValue('display') === 'grid') {
         document.getElementById('optionsWrapper').style.setProperty('display','none')
+        document.getElementById('answer').tabIndex = 0;
+        document.getElementById('settingsButton').tabIndex = 0;
     }
 }
 
@@ -403,11 +413,11 @@ function toggleDecorations() {
 }
 
 // Themes, variable changer;
-function changeThemeLight() {
+function changeThemeDefault() {
     const htmlEl = document.getElementById('html');
-    htmlEl.style.setProperty("--bg","white");
-    htmlEl.style.setProperty("--sub","slategray");
-    htmlEl.style.setProperty("--text","black");
+    htmlEl.style.setProperty("--bg","rgb(32,34,37)");
+    htmlEl.style.setProperty("--sub","#646669");
+    htmlEl.style.setProperty("--text","#e2b714");
 }
 function changeThemeDark() {
     const htmlEl = document.getElementById('html');
@@ -415,9 +425,106 @@ function changeThemeDark() {
     htmlEl.style.setProperty("--sub","#444");
     htmlEl.style.setProperty("--text","grey");
 }
-function changeThemeDefault() {
+function changeThemeLight() {
     const htmlEl = document.getElementById('html');
-    htmlEl.style.setProperty("--bg","rgb(32,34,37)");
-    htmlEl.style.setProperty("--sub","#646669");
-    htmlEl.style.setProperty("--text","#e2b714");
+    htmlEl.style.setProperty("--bg","white");
+    htmlEl.style.setProperty("--sub","slategray");
+    htmlEl.style.setProperty("--text","black");
+}
+function changeTheme8008() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#333a45");
+    htmlEl.style.setProperty("--sub","#939eae");
+    htmlEl.style.setProperty("--text","#f44c7f");
+}
+function changeThemeBotanical() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#7b9c98");
+    htmlEl.style.setProperty("--sub","#495755");
+    htmlEl.style.setProperty("--text","#eaf1f3");
+}
+function changeThemeFrooChew() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#d6d3d6");
+    htmlEl.style.setProperty("--sub","#b49cb5");
+    htmlEl.style.setProperty("--text","#5c1e5f");
+}
+function changeThemeMatrix() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#000");
+    htmlEl.style.setProperty("--sub","#003b00");
+    htmlEl.style.setProperty("--text","#15ff00");
+}
+function changeThemePaper() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#eee");
+    htmlEl.style.setProperty("--sub","#b2b2b2");
+    htmlEl.style.setProperty("--text","#444");
+}
+function changeThemeMiami() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#18181a");
+    htmlEl.style.setProperty("--sub","#47bac0");
+    htmlEl.style.setProperty("--text","#e4609b");
+}
+function changeThemeDragon() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#1a0b0c");
+    htmlEl.style.setProperty("--sub","#e2a528");
+    htmlEl.style.setProperty("--text","#ff3a32");
+}
+function changeThemeRyujin() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#081426");
+    htmlEl.style.setProperty("--sub","#ffbc90");
+    htmlEl.style.setProperty("--text","#f17754");
+}
+function changeThemeSewing() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#241963");
+    htmlEl.style.setProperty("--sub","#446ad5");
+    htmlEl.style.setProperty("--text","#f2ce83");
+}
+function changeThemeStrawberry() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#f37f83");
+    htmlEl.style.setProperty("--sub","#e53c58");
+    htmlEl.style.setProperty("--text","#fcfcf8");
+}
+function changeThemeAlpine() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","#6c687f");
+    htmlEl.style.setProperty("--sub","#9994b8");
+    htmlEl.style.setProperty("--text","#fff");
+}
+
+// Operation Options
+
+function permitDecPrecision() {
+    const decPrecisionEl = document.getElementById('decPrecision')
+    if (decPrecision === 0) {
+        decPrecision = 1;
+        decPrecisionEl.innerHTML = 'Division<br><br><span>Decimal Precision:</span><br>range inputs are numerator and denominator';
+    }
+    else if (decPrecision === 1) {
+        decPrecision = 2;
+        decPrecisionEl.innerHTML = 'Division<br><br><span>2 Decimal Precision:</span><br>Are you sure?';
+    }
+    else if (decPrecision === 2) {
+        decPrecision = 0;
+        decPrecisionEl.innerHTML = 'Division<br><br><span>default:</span> range inputs are factors';
+    }
+}
+
+
+function permitNegatives() {
+    const subNegativesEl = document.getElementById('subNegatives')
+    if (subNegatives === 0) {
+        subNegatives = 1;
+        subNegativesEl.innerHTML = 'Subtraction<br><br><span>Negatives:</span> permit negatives';
+    }
+    else if (subNegatives === 1) {
+        subNegatives = 0;
+        subNegativesEl.innerHTML = 'Subtraction<br><br><span>DEFAULT:</span> no negatives';
+    }
 }

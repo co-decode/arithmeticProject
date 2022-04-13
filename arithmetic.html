@@ -9,7 +9,7 @@
         <div id="container" class="container">
             <div class="center">
             <div class="top">
-                <div id="logo" class="logo" tabindex="0">Arhythmetic</div>
+                <div id="logo" class="logo" tabindex="0" onclick="menuToggle()">Arhythmetic</div>
                 <div id="time" class="time">Time: 0</div>
                 <div id ="pulse" class="pulse"></div>
             </div>
@@ -73,7 +73,7 @@
     </div>
     <div id="optionsWrapper">
         <div id="optionsMenu">
-            <div id="optionsTitle">options</div>
+            <div id="optionsTitle" onclick="menuToggle()">options</div>
             <div id="optionsTheme">Themes
                 <div id="oTDecorations">Decorations
                     <button id="decorations" onclick="toggleDecorations()">off</button>
@@ -82,10 +82,49 @@
                     <button id="default" onclick="changeThemeDefault()">default</button>
                     <button id="dark" onclick="changeThemeDark()">dark</button>
                     <button id="light" onclick="changeThemeLight()">light</button>
+                    <button id="8008" onclick="changeTheme8008()">8008</button>
+                    <button id="botanical" onclick="changeThemeBotanical()">Botanical</button>
+                    <button id="froochew" onclick="changeThemeFrooChew()">FrooChew</button>
+                    <button id="matrix" onclick="changeThemeMatrix()">Matrix</button>
+                    <button id="paper" onclick="changeThemePaper()">Paper</button>
+                    <button id="miami" onclick="changeThemeMiami()">Miami</button>
+                    <button id="dragon" onclick="changeThemeDragon()">Dragon</button>
+                    <button id="ryujin" onclick="changeThemeRyujin()">Ryujin</button>
+                    <button id="sewing" onclick="changeThemeSewing()">Sewing</button>
+                    <button id="strawberry" onclick="changeThemeStrawberry()">Strawberry</button>
+                    <button id="alpine" onclick="changeThemeAlpine()">Alpine</button>
                 </div>
             </div>
-            <div id="optionsInfo">Info</div>
-            <div id="optionsOperation">Operations</div>
+            <div id="optionsInfo">Info
+                <div id="oIHotkeys">- Hotkeys -
+                    <ul>
+                        <li>shift + r: reset session</li>
+                        <li>shift + m: toggle memory</li>
+                        <li>shift + s: toggle settings</li>
+                        <li>shift + o: toggle options</li>
+                    </ul>
+                </div>
+                <div id="operationInfo">- Note -
+                    <ul>Division:
+                        <li><br>
+                            The range inputs are factor pairs.<br>
+                            The left range input will determine the range of answers.<br><br>
+                            Setting decimal precision will cause other operations to require decimal precision.<br><br>
+                        </li>Subtraction:
+                        <li><br>
+                            Questions that generate negative answers are inverted.<br>
+                            The left and right numbers are switched.<br>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="optionsOperation">Operations
+                <div id="decPrecision" onclick="permitDecPrecision()">Division<br><br>
+                <span>DEFAULT:</span> range inputs are factors</div>
+                <div id="subNegatives" onclick="permitNegatives()">Subtraction<br><br>
+                    <span>DEFAULT:</span> no negatives</div>
+            </div>
+
         </div>
     </div>
     <div id="decBack"></div>

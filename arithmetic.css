@@ -548,7 +548,6 @@ li::marker {
 
     display: grid;
     grid-template: max-content 1fr / 1fr;
-    
 }
 #optionsMenu > #optionsTitle {
     grid-row: 1 / 2;
@@ -558,9 +557,14 @@ li::marker {
     padding:5px;
     border:none;
 }
+#optionsTitle:hover {
+    cursor:pointer;
+}
 #optionsTheme {
     display: grid;
     grid-template:max-content max-content 1fr / 1fr;
+    overflow-y:scroll;
+    scrollbar-width:none;
 }
 #oTDecorations, #oTColours {
     font-size:var(--fssml);
@@ -568,7 +572,7 @@ li::marker {
     grid-template:max-content / 1fr;
     grid-auto-rows: max-content;
 }
-#decorations:hover {
+#decorations:hover, #decorations:focus {
     background-color: var(--bg);
 }
 #decorations {
@@ -578,6 +582,8 @@ li::marker {
     font-variant-caps: all-small-caps;
     font-family: var(--ff);
     font-size:var(--fssml);
+
+    outline:none;
 }
 #oTColours > button {
     background:transparent;
@@ -586,8 +592,10 @@ li::marker {
     font-variant-caps: all-small-caps;
     font-family: var(--ff);
     font-size:var(--fssml);
+
+    outline:none;
 }
-#oTColours > button:hover {
+#oTColours > button:hover, #oTColours > button:focus {
     background-color: var(--bg);
 }
 
@@ -609,4 +617,66 @@ li::marker {
     background-size: 50px 50px;
     background-repeat:repeat;
     transition:opacity 1s ease 0s;
+}
+#optionsInfo {
+    overflow-y:scroll;
+    scrollbar-width:none;
+    
+}
+#oIHotkeys, #operationInfo {
+    font-size: var(--fssml);
+}
+#oIHotkeys {
+    display:grid;
+    grid: max-content auto / auto;
+}
+#operationInfo > ul, #oIHotkeys > ul {
+    list-style-type: none;
+    font-size: var(--fsmin);
+    display:grid;
+    padding:0;
+    text-align: center;
+    
+}
+#operationInfo > ul > li {
+    list-style-type: none;
+    font-size: var(--fsmin);
+    padding:0;
+    margin:0 auto;
+    text-align: start;
+    width:90%;
+
+}
+#oIHotkeys > ul > li {
+    margin:auto;
+}
+
+#optionsOperation {
+    grid: max-content 1fr 1fr / 1fr;
+    overflow-y:scroll;
+    scrollbar-width:none;
+}
+#decPrecision {
+    margin:auto;
+    font-size:var(--fssml);
+    cursor:pointer
+}
+#subNegatives {
+    margin:auto;
+    font-size:var(--fssml);
+    cursor:pointer;
+}
+#decPrecision:hover {
+    width:100%;
+    background-color:var(--bg);
+}
+#subNegatives:hover {
+    width:100%;
+    background-color:var(--bg);
+}
+#decPrecision > span {
+    font-variant-caps: all-small-caps;
+}
+#subNegatives > span {
+    font-variant-caps: all-small-caps
 }
