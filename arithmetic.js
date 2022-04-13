@@ -143,8 +143,8 @@ const qGen = () => {
     else {
     qTime = qBeginTime-qEndTime 
     }
-    console.log(qBeginTime,qEndTime, qTime)
-    console.log((qTime/1000).toFixed(1))
+    // console.log(qBeginTime,qEndTime, qTime)
+    // console.log((qTime/1000).toFixed(1))
 }
 //      v For Question timing ^
 let qBeginTime = 0;
@@ -368,8 +368,8 @@ function retabUnderlay() {
 // Setting up Options menu toggle
 document.getElementById('optionsWrapper').style.setProperty('display','none')
 
-document.getElementById('logo').addEventListener("click", e=>{
-    console.log(document.getElementById('optionsWrapper').style.getPropertyValue("display"))
+document.getElementById('logo').addEventListener("click", e=>{  
+    // console.log(document.getElementById('optionsWrapper').style.getPropertyValue("display"))
     document.getElementById('optionsWrapper').style.setProperty('display','grid')
     }
 )
