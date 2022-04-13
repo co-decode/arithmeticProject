@@ -167,16 +167,8 @@ const qCheck = () => {
                 document.getElementById('score').innerText = `Correct: ${++sessScore}`;
             }
         }
-        // function depositQNumbers () {
-        //     document.getElementById('memoryList').appendChild(document.createElement('li'))
-        //     return stringQ = `${leftNumber}` + opChosen + `${rightNumber}`
-        // }
         let stringQnA = `${leftNumber} ${opChosen} ${rightNumber} = ${(eval(stringQ)).toFixed(0)}`
 
-        // function depositQTime() {
-        //     document.getElementById('memoryList').lastChild.innerText = `${stringQ} = ${eval(stringQ).toFixed(0)}\nTime: ${(qTime/1000).toFixed(1)}\n\n`
-        // }
-        // depositQNumbers()
         qGen();
         depositQ(stringQnA);
     }
@@ -193,7 +185,7 @@ qGen()
 // Settings Button
 const sButton = document.getElementById("settingsButton")
 const sWrapper = document.getElementById("settingsWrapper")
-
+sWrapper.style.setProperty("display", "none")
 const sClose = document.getElementById("settingsClose")
 
 
@@ -259,20 +251,56 @@ function depositQ (qNa) {
     document.getElementById('memoryList').lastChild.innerText = `${qNa}\nTime: ${(qTime/1000).toFixed(1)}\n\n`
 }
 
-// function depositQNumbers () {
-//     document.getElementById('memoryList').appendChild(document.createElement('li'))
-//     let stringQ = `${leftNumber}` + opChosen + `${rightNumber}`
-// }
-
-// function depositQTime() {
-//     document.getElementById('memoryList').lastChild.innerText = `${stringQ} = ${eval(stringQ).toFixed(0)}\nTime: ${(qTime/1000).toFixed(1)}\n\n`
-// }
-
 //Memory Wipe
 
 function wipeMemory() {
     let i = document.querySelectorAll('ol > li').length
     while (i-- > 0) {
         document.querySelector('#memoryList > li').remove()
+    }
+}
+
+//Pull toggle
+const pullableTab = document.getElementById('tab');
+let tabPulled = false;
+pullableTab.tabIndex = 0;
+
+document.getElementById('tab').addEventListener("click",e=> {
+    tabPull();   
+})
+document.getElementById('tab').addEventListener("keypress",e=> {
+    if (e.code === "Enter") {
+    tabPull();   
+    }
+})
+
+
+function tabPull() {
+    if (tabPulled === false) {
+        pullableTab.style.setProperty('left','80%')
+        pullableTab.style.setProperty('width','20%')
+        
+        document.getElementById('resultsBar').style.setProperty('opacity','1');
+        document.getElementById('resultsBar').style.setProperty('width','calc(100%*19/20)');
+        // document.getElementById('resultsBar').style.setProperty('left','88%');
+        // document.getElementById('resultsBar').style.setProperty('width','100%');
+        
+        document.getElementById('container').style.setProperty('position','absolute')
+        document.getElementById('container').style.setProperty('transform','translateX(-10%)')
+        document.getElementById('settingsWrapper').style.setProperty('position','absolute')
+        document.getElementById('settingsWrapper').style.setProperty('transform','translateX(-10%)')
+        
+        tabPulled = true;
+    }
+    else if (tabPulled ===  true) {
+        
+        pullableTab.style.setProperty('left','99%')
+        pullableTab.style.setProperty('width','1%')
+        document.getElementById('resultsBar').style.setProperty('opacity','0');
+        document.getElementById('resultsBar').style.setProperty('width','0');
+        document.getElementById('container').style.setProperty('transform','translateX(0)')
+        document.getElementById('settingsWrapper').style.setProperty('transform','translateX(0)')
+    
+        tabPulled = false;
     }
 }

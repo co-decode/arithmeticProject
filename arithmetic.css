@@ -32,6 +32,8 @@ input::selection {
     justify-content:space-around;
     height:100%;
     width:100%;
+
+    transition:all 0.2s;
 }
 
 .center {
@@ -183,7 +185,7 @@ input::selection {
     background:var(--sub);
 }
 #settings > button:focus {
-    outline: var(--sub) 1px dashed;
+    outline: var(--sub) 1px double;
 }
 
 #score {
@@ -213,7 +215,7 @@ input::selection {
     opacity:0;
     backdrop-filter: blur(2px);
     background-color:rgba(0,0,0,0.05);
-    transition: opacity 0.3s ease 0s;
+    transition: all 0.25s ease 0s;
 }
 
 
@@ -227,7 +229,7 @@ input::selection {
 
     border-radius: 10px;
     background-color:var(--sub);
-    border: var(--bg) dotted 3px;
+    border: var(--bg) double 4px;
 }
 #sTop {
     height:100%;
@@ -390,7 +392,7 @@ input::selection {
     background:var(--bg);
 }
 #sBotMid > button:focus {
-    outline: var(--bg) 1px dashed;
+    outline: var(--bg) 1px double;
 }
 
 #sBotRight {
@@ -424,53 +426,51 @@ input::selection {
 
     top:0;
     left:99%;
-    width:11%;
+    width:1%;
     height:100%;
     background:var(--bg);
     z-index: 1002;
-    transition: all 0.3s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s;
     
+    cursor:pointer;
 }
 #tab:hover {
     background-color:var(--sub)
 }
 
-#tab > a {
-    position:absolute;
-    width:100%;
-    height:100%;
-    cursor:pointer;
-}
-
 #tab:focus-within {
     background-color:var(--sub);
-    left:90%;
-    width:20%;
 }
-#tab:hover > #resultsBar {
+/* #tab:hover > #resultsBar {
     background-color:var(--sub);
-}
+} */
 #resultsBar {
     background-color:var(--bg);
     position:absolute;
     top:0;
     right:0;
     height:100%;
-    width:calc(100%*10/11);    
+    width:0%;    
     overflow-y: scroll;
     overflow-x:visible;
     white-space: nowrap;
     scrollbar-width: thin;
-    transition: all 0.3s ease-in-out 0s;
+    transition: all 0.2s ease-in-out 0s;
 
     display:grid;
+    opacity:0;
     /* grid-template: max-content max-content max-content max-content 1fr/1fr; */
     grid-auto-rows: max-content;
     
     text-align:center;
     font-family:var(--ff);
     font-size:var(--fssml);
-    color:var(--text)
+    color:var(--text);
+
+    z-index: 1500;
+}
+#resultsBar:hover {
+    background-color:var(--sub)
 }
 
 #resultsList {
