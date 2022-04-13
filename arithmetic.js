@@ -203,24 +203,25 @@ sButton.addEventListener("click", e => {
     sWrapper.style.setProperty("z-index", "1000")
     sWrapper.style.setProperty("opacity", "1")
 
+    untabUnderlay();
+
     sessReset();
 } );
 
 sClose.addEventListener("click", e => {
-    closeNGen()
-    sessReset()
+    closeNGen();
+    sessReset();
+    retabUnderlay();
     sWrapper.style.setProperty("display", "none")
 } );
 document.addEventListener("keypress", e => {
     if (window.getComputedStyle(sWrapper).display === 'block') {
-        if (e.shiftKey && e.code === 'Enter') {
-                // closeNGen()
+        if (e.shiftKey && e.code === 'KeyS') {
             document.getElementById("settingsClose").focus();
             }
     }
     if (window.getComputedStyle(sWrapper).display === 'none') {
-        if (e.shiftKey && e.code === 'Enter') {
-                // closeNGen()
+        if (e.shiftKey && e.code === 'KeyS') {
             document.getElementById("settingsButton").focus();
             }
     }
@@ -317,7 +318,7 @@ function tabPull() {
 
 // Tab container
 function focusFirstElement() {
-    document.getElementById('answer').focus();
+    document.getElementById('logo').focus();
 }
 
 // Session Reset : Shift R within 'answer' -- Explain this in the options menu: false;
@@ -327,4 +328,25 @@ document.getElementById('answer').addEventListener("keyup", e=> {
         document.getElementById('answer').value = '';   
         document.getElementById('answer').focus();   
     }
+    if (e.shiftKey && e.code==='KeyM') {
+        if (sessScore > 0) {
+            tabPull()
+            document.getElementById('answer').value = '';   
+        }
+        else {
+            tabPull()
+            sessReset();
+            document.getElementById('answer').value = '';   
+        }
+    }
 })
+
+// Untabble 'answer' and 'settingButton' when Settings wrapper is open:
+function untabUnderlay() {
+    document.getElementById('answer').tabIndex = -1;
+    document.getElementById('settingsButton').tabIndex = -1;
+}
+function retabUnderlay() {
+    document.getElementById('answer').tabIndex = 0;
+    document.getElementById('settingsButton').tabIndex = 0;
+}

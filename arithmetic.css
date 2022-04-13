@@ -19,6 +19,7 @@ body {
     
     background-color:var(--bg);
     overflow-y:hidden;
+    overflow-x:hidden;
 
 }
 
@@ -63,13 +64,21 @@ input::selection {
 }
 .logo {
     width:max-content;
+    height:max-content;
     justify-self:start;
+    outline:none;
 
     font-family:var(--ff);
     letter-spacing:3px;
     color:var(--text);
     font-size:var(--fsmed);
     font-weight:bold;
+}
+.logo:focus {
+    text-shadow: 3px 3px 2px var(--sub);
+}
+#options {
+    outline:none;
 }
 .time {
     height:max-content;
