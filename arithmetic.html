@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="html">
     <head>
         <title>Arithmetic</title>
         <meta charset="utf-8">
@@ -71,6 +71,24 @@
             </ol>
         </div>
     </div>
+    <div id="optionsWrapper">
+        <div id="optionsMenu">
+            <div id="optionsTitle">options</div>
+            <div id="optionsTheme">Themes
+                <div id="oTDecorations">Decorations
+                    <button id="decorations" onclick="toggleDecorations()">off</button>
+                </div>
+                <div id="oTColours">Colour Scheme
+                    <button id="default" onclick="changeThemeDefault()">default</button>
+                    <button id="dark" onclick="changeThemeDark()">dark</button>
+                    <button id="light" onclick="changeThemeLight()">light</button>
+                </div>
+            </div>
+            <div id="optionsInfo">Info</div>
+            <div id="optionsOperation">Operations</div>
+        </div>
+    </div>
+    <div id="decBack"></div>
     <span tabindex="0" onfocus="focusFirstElement()"></span>
     <script src="arithmetic.js" type="application/javascript"></script>
 </body>

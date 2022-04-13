@@ -8,7 +8,6 @@ html {
     --fssml:20px;
     --fsmin:10px;
     scrollbar-width: none;
-
 }
 
 body {
@@ -501,4 +500,113 @@ hr {
 }
 li::marker {
     font-size:8px;
+}
+
+#optionsWrapper {
+    height: 100%;
+    width:100%;
+    min-height:480px;
+    position:absolute;
+    box-sizing:border-box;
+    top:0;
+    z-index:1100;
+    padding: 6% 0;
+
+    display:none;
+
+
+    opacity:1;
+    backdrop-filter: blur(2px);
+    background-color:rgba(0,0,0,0.05);
+    transition: all 0.25s ease 0s;   
+}
+#optionsMenu {
+    margin:7px auto;
+    height:90%;
+    width: 75%;
+    min-width: 570px;
+    display:grid;
+    grid-template:max-content 1fr / 1fr 1fr 1fr; 
+    align-items: center;
+
+    border-radius: 10px;
+    background-color:var(--sub);
+    border: var(--bg) solid 4px;    
+
+    text-align: center;
+    font-family: var(--ff);
+    color: var(--text)
+}
+#optionsTheme, #optionsInfo, #optionsOperation {
+    margin:0 auto auto auto;
+    height:95%;
+    width:90%;
+    grid-row: 2 / 3;
+    font-size:var(--fsmed);
+    border:var(--text) double 2px;
+    border-radius: 5px;
+
+    display: grid;
+    grid-template: max-content 1fr / 1fr;
+    
+}
+#optionsMenu > #optionsTitle {
+    grid-row: 1 / 2;
+    grid-column: 1 / 4;
+    font-size: var(--fsbig);
+    
+    padding:5px;
+    border:none;
+}
+#optionsTheme {
+    display: grid;
+    grid-template:max-content max-content 1fr / 1fr;
+}
+#oTDecorations, #oTColours {
+    font-size:var(--fssml);
+    display:grid;
+    grid-template:max-content / 1fr;
+    grid-auto-rows: max-content;
+}
+#decorations:hover {
+    background-color: var(--bg);
+}
+#decorations {
+    background:transparent;
+    color:var(--text);
+    border:none;
+    font-variant-caps: all-small-caps;
+    font-family: var(--ff);
+    font-size:var(--fssml);
+}
+#oTColours > button {
+    background:transparent;
+    color:var(--text);
+    border:none;
+    font-variant-caps: all-small-caps;
+    font-family: var(--ff);
+    font-size:var(--fssml);
+}
+#oTColours > button:hover {
+    background-color: var(--bg);
+}
+
+#decBack {
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0%;
+    border:none;
+    background-color:transparent;
+    background-image:
+      linear-gradient(45deg, var(--sub) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--sub) 25%, transparent 25%),
+      linear-gradient(135deg, var(--sub) 25%, transparent 25%),
+      linear-gradient(-135deg, var(--sub) 25%, transparent 25%);
+    background-position:0 0, 0 0, 25px 0, -25px 0;
+    background-size: 50px 50px;
+    background-repeat:repeat;
+    transition:opacity 1s ease 0s;
 }

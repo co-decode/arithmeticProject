@@ -214,17 +214,20 @@ sClose.addEventListener("click", e => {
     retabUnderlay();
     sWrapper.style.setProperty("display", "none")
 } );
+
 document.addEventListener("keypress", e => {
     if (window.getComputedStyle(sWrapper).display === 'block') {
         if (e.shiftKey && e.code === 'KeyS') {
+            e.preventDefault();
             document.getElementById("settingsClose").focus();
             }
     }
     if (window.getComputedStyle(sWrapper).display === 'none') {
         if (e.shiftKey && e.code === 'KeyS') {
+            e.preventDefault()
             document.getElementById("settingsButton").focus();
             }
-    }
+    }   
 } );
 
 function closeNGen() {
@@ -322,13 +325,18 @@ function focusFirstElement() {
 }
 
 // Session Reset : Shift R within 'answer' -- Explain this in the options menu: false;
-document.getElementById('answer').addEventListener("keyup", e=> {
+// document.getElementById('answer').addEventListener("keyup", e=> {
+document.addEventListener("keydown", e=> {
     if (e.shiftKey && e.code === 'KeyR') {
-        sessReset();
-        document.getElementById('answer').value = '';   
-        document.getElementById('answer').focus();   
+        if (document.getElementById('settingsWrapper').style.getPropertyValue('display') === 'none') {
+            e.preventDefault();
+            sessReset();
+            document.getElementById('answer').value = '';   
+            document.getElementById('answer').focus();   
+        }
     }
     if (e.shiftKey && e.code==='KeyM') {
+        e.preventDefault()
         if (sessScore > 0) {
             tabPull()
             document.getElementById('answer').value = '';   
@@ -349,4 +357,67 @@ function untabUnderlay() {
 function retabUnderlay() {
     document.getElementById('answer').tabIndex = 0;
     document.getElementById('settingsButton').tabIndex = 0;
+}
+
+// Setting up Options menu toggle
+document.getElementById('optionsWrapper').style.setProperty('display','none')
+
+document.getElementById('logo').addEventListener("click", e=>{
+    console.log(document.getElementById('optionsWrapper').style.getPropertyValue("display"))
+    document.getElementById('optionsWrapper').style.setProperty('display','grid')
+    }
+)
+document.getElementById('logo').addEventListener("keypress", e=>{
+    if (e.code === "Enter") {
+        menuToggle()
+    }
+})
+function menuToggle() {
+    if (document.getElementById('optionsWrapper').style.getPropertyValue('display') === 'none') {
+        document.getElementById('optionsWrapper').style.setProperty('display','grid')
+        document.getElementById('settingsWrapper').style.setProperty('display','none')
+    }
+    else if (document.getElementById('optionsWrapper').style.getPropertyValue('display') === 'grid') {
+        document.getElementById('optionsWrapper').style.setProperty('display','none')
+    }
+}
+
+// Decorations Toggle
+function toggleDecorations() {
+    const decorations = document.getElementById('decorations')
+    if (decorations.innerText === 'off') {
+        decorations.innerText = 'subtle';
+        document.getElementById('decBack').style.setProperty('opacity','4%')
+        document.getElementById('decBack').style.setProperty('display','block')
+    }
+    else if (decorations.innerText === 'subtle') {
+        decorations.innerText = 'on';
+        document.getElementById('decBack').style.setProperty('opacity','8%')
+        document.getElementById('decBack').style.setProperty('display','block')
+    }
+    else if (decorations.innerText === 'on') {
+        decorations.innerText = 'off';
+        document.getElementById('decBack').style.setProperty('opacity','0')
+        setTimeout(x=>document.getElementById('decBack').style.setProperty('display','none'),1000);
+    }
+}
+
+// Themes, variable changer;
+function changeThemeLight() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","white");
+    htmlEl.style.setProperty("--sub","slategray");
+    htmlEl.style.setProperty("--text","black");
+}
+function changeThemeDark() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","black");
+    htmlEl.style.setProperty("--sub","#444");
+    htmlEl.style.setProperty("--text","grey");
+}
+function changeThemeDefault() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg","rgb(32,34,37)");
+    htmlEl.style.setProperty("--sub","#646669");
+    htmlEl.style.setProperty("--text","#e2b714");
 }
