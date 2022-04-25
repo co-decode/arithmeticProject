@@ -413,89 +413,140 @@ function toggleDecorations() {
 }
 
 // Themes, variable changer;
+function initTheme() {
+    const htmlEl = document.getElementById('html');
+    htmlEl.style.setProperty("--bg",localStorage.getItem("--bg"));
+    htmlEl.style.setProperty("--sub",localStorage.getItem("--sub"));
+    htmlEl.style.setProperty("--text",localStorage.getItem("--text")); 
+}
+initTheme();
+
+
 function changeThemeDefault() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","rgb(32,34,37)");
     htmlEl.style.setProperty("--sub","#646669");
     htmlEl.style.setProperty("--text","#e2b714");
+    localStorage.setItem("--bg","rgb(32,34,37)");
+    localStorage.setItem("--sub","#646669");
+    localStorage.setItem("--text","#e2b714");
 }
 function changeThemeDark() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","black");
     htmlEl.style.setProperty("--sub","#444");
     htmlEl.style.setProperty("--text","grey");
+    localStorage.setItem("--bg","black");
+    localStorage.setItem("--sub","#444");
+    localStorage.setItem("--text","grey");
 }
 function changeThemeLight() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","white");
     htmlEl.style.setProperty("--sub","slategray");
     htmlEl.style.setProperty("--text","black");
+    localStorage.setItem("--bg","white");
+    localStorage.setItem("--sub","slategray");
+    localStorage.setItem("--text","black");
 }
 function changeTheme8008() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#333a45");
     htmlEl.style.setProperty("--sub","#939eae");
     htmlEl.style.setProperty("--text","#f44c7f");
+    localStorage.setItem("--bg","#333a45");
+    localStorage.setItem("--sub","#939eae");
+    localStorage.setItem("--text","#f44c7f");
 }
 function changeThemeBotanical() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#7b9c98");
     htmlEl.style.setProperty("--sub","#495755");
     htmlEl.style.setProperty("--text","#eaf1f3");
+    localStorage.setItem("--bg","#7b9c98");
+    localStorage.setItem("--sub","#495755");
+    localStorage.setItem("--text","#eaf1f3");
 }
 function changeThemeFrooChew() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#d6d3d6");
     htmlEl.style.setProperty("--sub","#b49cb5");
     htmlEl.style.setProperty("--text","#5c1e5f");
+    localStorage.setItem("--bg","#d6d3d6");
+    localStorage.setItem("--sub","#b49cb5");
+    localStorage.setItem("--text","#5c1e5f");
 }
 function changeThemeMatrix() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#000");
     htmlEl.style.setProperty("--sub","#003b00");
     htmlEl.style.setProperty("--text","#15ff00");
+    localStorage.setItem("--bg","#000");
+    localStorage.setItem("--sub","#003b00");
+    localStorage.setItem("--text","#15ff00");
 }
 function changeThemePaper() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#eee");
     htmlEl.style.setProperty("--sub","#b2b2b2");
     htmlEl.style.setProperty("--text","#444");
+    localStorage.setItem("--bg","#eee");
+    localStorage.setItem("--sub","#b2b2b2");
+    localStorage.setItem("--text","#444");
 }
 function changeThemeMiami() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#18181a");
     htmlEl.style.setProperty("--sub","#47bac0");
     htmlEl.style.setProperty("--text","#e4609b");
+    localStorage.setItem("--bg","#18181a");
+    localStorage.setItem("--sub","#47bac0");
+    localStorage.setItem("--text","#e4609b");
 }
 function changeThemeDragon() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#1a0b0c");
     htmlEl.style.setProperty("--sub","#e2a528");
     htmlEl.style.setProperty("--text","#ff3a32");
+    localStorage.setItem("--bg","#1a0b0c");
+    localStorage.setItem("--sub","#e2a528");
+    localStorage.setItem("--text","#ff3a32");
 }
 function changeThemeRyujin() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#081426");
     htmlEl.style.setProperty("--sub","#ffbc90");
     htmlEl.style.setProperty("--text","#f17754");
+    localStorage.setItem("--bg","#081426");
+    localStorage.setItem("--sub","#ffbc90");
+    localStorage.setItem("--text","#f17754");
 }
 function changeThemeSewing() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#241963");
     htmlEl.style.setProperty("--sub","#446ad5");
     htmlEl.style.setProperty("--text","#f2ce83");
+    localStorage.setItem("--bg","#241963");
+    localStorage.setItem("--sub","#446ad5");
+    localStorage.setItem("--text","#f2ce83");
 }
 function changeThemeStrawberry() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#f37f83");
     htmlEl.style.setProperty("--sub","#e53c58");
     htmlEl.style.setProperty("--text","#fcfcf8");
+    localStorage.setItem("--bg","#f37f83");
+    localStorage.setItem("--sub","#e53c58");
+    localStorage.setItem("--text","#fcfcf8");
 }
 function changeThemeAlpine() {
     const htmlEl = document.getElementById('html');
     htmlEl.style.setProperty("--bg","#6c687f");
     htmlEl.style.setProperty("--sub","#9994b8");
     htmlEl.style.setProperty("--text","#fff");
+    localStorage.setItem("--bg","#6c687f");
+    localStorage.setItem("--sub","#9994b8");
+    localStorage.setItem("--text","#fff");
 }
 
 // Operation Options
