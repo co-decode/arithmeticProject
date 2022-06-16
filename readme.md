@@ -39,7 +39,7 @@ The game page features:
 - An Arhythmetic logo which doubles as the options page button
 - A question display and answer input
 - A timer which only begins when the first keystroke is made within the answer input
-- A pulse animation, which is calibrated to pulse approximately once every second, measured using the more accurate performance.now() function
+- A pulse animation, which is calibrated to pulse approximately once every second, measured using the more accurate performance.now() function. The project is called _Arythmetic_ because the standard javascript time functions would quickly lose time to the second.
 - A settings button which opens up the settings page
 - A correct answer counter
 - A tab on the right side of the screen which, when clicked, opens the memory bar.
