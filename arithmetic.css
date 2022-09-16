@@ -58,7 +58,7 @@ input::selection {
 /* Top */
 .top {
     display:grid;
-    grid-template-columns: 1fr 100px 40px;
+    grid-template-columns: 1fr 100px 80px;
     grid-template-rows: auto;
 }
 .logo {
@@ -89,6 +89,7 @@ input::selection {
     
     font-family:var(--ff);
     letter-spacing:2px;
+    white-space:nowrap;
     color:var(--text);
     font-size:var(--fssml);
     font-weight:bold;
@@ -97,10 +98,11 @@ input::selection {
     width:40px;
     height:40px;
     display:none;
+    margin:0 auto;
 
     background-image:radial-gradient(circle at center, transparent, transparent 50%, var(--text) 55%, var(--text) 60%,transparent 60%);
     transform:scale(0);
-    animation: pulse 1000ms ease infinite 0s;
+    animation: pulse 1000ms linear infinite 0s;
 }
 @keyframes pulse {
     to {
@@ -623,6 +625,7 @@ li::marker {
     background-size: 50px 50px;
     background-repeat:repeat;
     transition:opacity 1s ease 0s;
+    pointer-events: none;
 }
 #optionsInfo {
     overflow-y:scroll;

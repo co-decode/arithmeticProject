@@ -13,57 +13,56 @@ let sessSecs = 0;
 let timeLimitSeconds = document.getElementById('timeLimit').value
 let timerInterval
 let sessStartTime
+let elapsed
 
 document.getElementById("answer").addEventListener("keypress", e => {
     if (inSession===1) {
         inSession = 0;
-        sessStartTime = performance.now()
         document.getElementById('sessionResultST').innerText = `Score: ${sessScore} Time: 0`
         document.getElementById('sessionResultAv').innerText = `Speed: 0 s/q`
-        timerInterval = setInterval(timer, 989)
+        window.requestAnimationFrame(function timerInterval(timestamp) { 
+            if (inSession !== 0) return
+            if (!sessStartTime) sessStartTime = timestamp
+            elapsed = timestamp - sessStartTime
+            if (timeLimitSeconds) {
+                if (timeLimitSeconds > elapsed/1000) {
+                    document.getElementById('time').innerText = `Time: ${Math.ceil(timeLimitSeconds - elapsed/1000)}`;
+                    updateSessResult();
+                    window.requestAnimationFrame(timerInterval)
+                }
+                else {
+                    document.getElementById('time').innerText = `Time: ${Math.ceil(timeLimitSeconds - elapsed/1000)}`;
+                    document.getElementById("pulse").style.setProperty('display','none');
+                    sessStartTime = 0
+                    inSession = -1;
+                    updateSessResult();
+                    return;
+                }
+            }
+            else {
+                document.getElementById('time').innerText = `Time: ${Math.floor(elapsed/1000)}`; 
+                updateSessResult();
+                window.requestAnimationFrame(timerInterval)
+            }
+            
+
+
+        })
         wipeMemory();
         document.getElementById("pulse").style.setProperty('display','block')
 } } ); 
 
-//Question Time
-
-
-
-//Timing Function
-
-const timer = () => {
-    // console.log(performance.now())
-    if (timeLimitSeconds) {
-        if (timeLimitSeconds > 1) {
-            document.getElementById('time').innerText = `Time: ${--timeLimitSeconds}`;
-            timeResult = ++sessSecs;
-            updateSessResult();
-        }
-        else {
-            document.getElementById('time').innerText = `Time: ${--timeLimitSeconds}`;
-            clearInterval(timerInterval);
-            document.getElementById("pulse").style.setProperty('display','none');
-            inSession = -1;
-            timeResult = ++sessSecs;
-            updateSessResult();
-        }
-    }
-    else {
-    document.getElementById('time').innerText = `Time: ${++sessSecs}`; 
-        timeResult = sessSecs;
-        updateSessResult();
-    }
-}
-
 //Session Reset
 
 function sessReset () {
-    clearInterval(timerInterval)
+    // clearInterval(timerInterval)
     inSession = 1;
-    sessSecs = 0;
+    sessStartTime = 0;
     sessScore = 0;
+    qBeginTime = 0
     timeLimitSeconds = document.getElementById('timeLimit').value;
     // console.log(timeLimitSeconds)
+    // qGen()
     
     if (timeLimitSeconds) {
         document.getElementById('time').innerText = `Time: ${timeLimitSeconds}`;
@@ -77,7 +76,7 @@ function sessReset () {
         document.getElementById('score').innerText = `Correct: ${sessScore} out of ${scoreLimitValue.value}`;
     }
     else {
-    document.getElementById('score').innerText = `Correct: ${sessScore}`;
+        document.getElementById('score').innerText = `Correct: ${sessScore}`;
     }
 }
 
@@ -86,7 +85,6 @@ let leftNumber;
 let rightNumber;
 let opChosen;
 let sessScore = 0
-
 
 
 const qGen = () => {
@@ -101,7 +99,6 @@ const qGen = () => {
     rightNumber = parseInt(Math.random()*(1+Math.abs(rightMax-rightMin)) + Number(rightMin));
     document.getElementById('leftNo').innerText = `${leftNumber}`;
     document.getElementById('rightNo').innerText = `${rightNumber}`;
-    // console.log("qGen",leftNumber,document.getElementById('leftNo').innerText,leftMin)
     
     //Operand check
     let opSpec = document.querySelector("#sMMinput > input").value;
@@ -116,7 +113,6 @@ const qGen = () => {
     
     //Operand generation
     opChosen = opSelected[parseInt(Math.random()*opSelected.length)]
-    // console.log(opChosen,opSelected,opSelected.length)
     opChosen ? document.getElementById('operand').innerText = opChosen : opChosen = '+';
 
     //Division, Subtraction fix
@@ -134,17 +130,10 @@ const qGen = () => {
                 document.getElementById('rightNo').innerText = `${rightNumber}`;
         }
     }
-    let qEndTime = qBeginTime
-    qBeginTime = performance.now()
     if (sessStartTime) {
-        qTime=qBeginTime-sessStartTime;
-        sessStartTime = false;
+        qTime=elapsed-qBeginTime;
+        qBeginTime = elapsed
     }
-    else {
-    qTime = qBeginTime-qEndTime 
-    }
-    // console.log(qBeginTime,qEndTime, qTime)
-    // console.log((qTime/1000).toFixed(1))
 }
 //      v For Question timing ^
 let qBeginTime = 0;
@@ -156,7 +145,6 @@ let subNegatives = 0
 
 const qCheck = () => {
     let stringQ = `${leftNumber}` + opChosen + `${rightNumber}`;
-    // console.log(stringQ)
 
     if (document.getElementById('answer').value === `${(eval(stringQ)).toFixed(decPrecision)}`) {
         document.getElementById('answer').value = ''
@@ -166,8 +154,7 @@ const qCheck = () => {
                 updateSessResult();
                 // console.log(inSession, typeof scoreLimitValue.value, typeof sessScore)
                 if (Number(scoreLimitValue.value) === sessScore) {
-                    clearInterval(timerInterval)
-                    inSession = -1;
+                    setTimeout(()=> inSession = -1,0);
                     document.getElementById("pulse").style.setProperty('display','none')
                 }      
             }
@@ -177,7 +164,7 @@ const qCheck = () => {
             }
         }
         let stringQnA = `${leftNumber} ${opChosen} ${rightNumber} = ${(eval(stringQ)).toFixed(0)}`
-
+        
         qGen();
         depositQ(stringQnA);
     }
@@ -252,14 +239,15 @@ document.getElementById('resultsList').appendChild(sessionResultAv)
 document.getElementById('sessionResultAv').innerText = `Speed: 0 s/q`
 
 function updateSessResult() {
-    document.getElementById('sessionResultST').innerText = `Score: ${sessScore} Time: ${timeResult}`;
+    document.getElementById('sessionResultST').innerText = `Score: ${sessScore} Time: ${(Math.floor(elapsed/100)/10).toFixed(1)} s`;
     if (sessScore > 0) {
-    document.getElementById('sessionResultAv').innerText = `Speed: ${(timeResult/sessScore).toFixed(1)} s/q`
+        document.getElementById('sessionResultAv').innerText = `Speed: ${(Math.floor(elapsed/1000)/sessScore).toFixed(1)} s/q`
     }
 }
 
 //Generate memory elements
 function depositQ (qNa) {
+    console.log('hit', inSession)
     if (inSession === 0) {
     document.getElementById('memoryList').appendChild(document.createElement('li'))
     document.getElementById('memoryList').lastChild.innerText = `${qNa}\nTime: ${(qTime/1000).toFixed(1)}\n\n`
@@ -344,7 +332,7 @@ document.addEventListener("keydown", e=> {
         }
         else {
             tabPull()
-            sessReset();
+            // sessReset();
             document.getElementById('answer').value = '';   
         }
     }
@@ -355,7 +343,7 @@ document.addEventListener("keydown", e=> {
     }
 })
 
-// Untabble 'answer' and 'settingButton' when Settings wrapper is open:
+// Untabable 'answer' and 'settingButton' when Settings wrapper is open:
 function untabUnderlay() {
     document.getElementById('answer').tabIndex = -1;
     document.getElementById('settingsButton').tabIndex = -1;
